@@ -29,12 +29,15 @@ class _LogoOnboardingState extends State<LogoOnboarding> {
   Future<void> _navigateToNextScreen() async {
     final prefs = await SharedPreferences.getInstance();
     final isNewUser = prefs.getBool('isNewUser') ?? true;
-    Provider.of<BusinessSetupController>(context, listen: false).fetchBusinessSetup(context);
+    Provider.of<BusinessSetupController>(context, listen: false)
+        .fetchBusinessSetup(context);
 
     Future.delayed(
       const Duration(seconds: 5),
       () {
-        businessSetup = Provider.of<BusinessSetupController>(context, listen: false).businessSetup;
+        businessSetup =
+            Provider.of<BusinessSetupController>(context, listen: false)
+                .businessSetup;
         if (isNewUser) {
           Navigator.pushReplacement(
             context,
@@ -55,7 +58,11 @@ class _LogoOnboardingState extends State<LogoOnboarding> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset('assets/images/smashgedo.png',width: 200,),
+        child: Image.asset(
+          'assets/images/smashgedo.png',
+          width: 2000,
+          height: 2000,
+        ),
       ),
     );
   }

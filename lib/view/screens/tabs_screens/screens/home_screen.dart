@@ -24,7 +24,6 @@ import 'package:food2go_app/controllers/profile/get_profile_provider.dart';
 import 'package:food2go_app/view/screens/points/points_items_screen.dart';
 import '../../../../controllers/banners/banners_provider.dart';
 import '../../../../models/banners/banners_model.dart';
-import '../../../../models/categories/categories_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,7 +35,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String selectedCategory = 'All';
   int _currentIndex = 0;
-
 
   @override
   void initState() {
@@ -56,193 +54,193 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-Widget build(BuildContext context) {
-  final businessSetupProvider = Provider.of<BusinessSetupController>(context, listen: false);
-  String from = businessSetupProvider.from;
-  String to = businessSetupProvider.to;
+  Widget build(BuildContext context) {
+    final businessSetupProvider =
+        Provider.of<BusinessSetupController>(context, listen: false);
+    String from = businessSetupProvider.from;
+    String to = businessSetupProvider.to;
 
-  // Parse the "from" and "to" time slots into DateTime objects
-  final now = DateTime.now();
-  final fromTime = DateTime(now.year, now.month, now.day,
-      int.parse(from.split(':')[0]), int.parse(from.split(':')[1]));
-  final toTime = DateTime(now.year, now.month, now.day,
-      int.parse(to.split(':')[0]), int.parse(to.split(':')[1]));
+    // Parse the "from" and "to" time slots into DateTime objects
+    final now = DateTime.now();
+    final fromTime = DateTime(now.year, now.month, now.day,
+        int.parse(from.split(':')[0]), int.parse(from.split(':')[1]));
+    final toTime = DateTime(now.year, now.month, now.day,
+        int.parse(to.split(':')[0]), int.parse(to.split(':')[1]));
 
-  final isClosed = now.isAfter(fromTime) && now.isBefore(toTime);
+    final isClosed = now.isAfter(fromTime) && now.isBefore(toTime);
 
-  return WillPopScope(
-    onWillPop: () async {
-      return false;
-    },
-    child: Scaffold(
-      body: Stack(
-        children: [
-          // Main content
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ListView(
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 16),
-                _buildSearchAndFilter(),
-                const SizedBox(height: 16),
-                _buildImageCarousel(),
-                _buildCategoryList(),
-                const SizedBox(height: 10),
-                _buildDealsSection(),
-                const SizedBox(height: 10),
-                _buildPopularFoodHeader(),
-                const SizedBox(height: 16),
-                _buildFoodItemsList(),
-                const SizedBox(height: 16),
-                _buildDiscountHeader(),
-                const SizedBox(height: 16),
-                _buildDiscountList(),
-                const SizedBox(height: 100),
-              ],
-            ),
-          ),
-
-          // Overlay when closed
-          if (isClosed) ...[
-            GestureDetector(
-              onTap: () {}, // Blocks taps on the underlying widgets
-              child: Container(
-                color: Colors.black.withOpacity(0.6), // Semi-transparent overlay
-                width: double.infinity,
-                height: double.infinity,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            // Main content
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ListView(
+                children: [
+                  _buildHeader(context),
+                  const SizedBox(height: 16),
+                  _buildSearchAndFilter(),
+                  const SizedBox(height: 16),
+                  _buildImageCarousel(),
+                  _buildCategoryList(),
+                  const SizedBox(height: 10),
+                  _buildDealsSection(),
+                  const SizedBox(height: 10),
+                  _buildPopularFoodHeader(),
+                  const SizedBox(height: 16),
+                  _buildFoodItemsList(),
+                  const SizedBox(height: 16),
+                  _buildDiscountHeader(),
+                  const SizedBox(height: 16),
+                  _buildDiscountList(),
+                  const SizedBox(height: 100),
+                ],
               ),
             ),
-            Center(
-              child: buildClosedWrap(context, from, to),
-            ),
+
+            // Overlay when closed
+            if (isClosed) ...[
+              GestureDetector(
+                onTap: () {}, // Blocks taps on the underlying widgets
+                child: Container(
+                  color:
+                      Colors.black.withOpacity(0.6), // Semi-transparent overlay
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ),
+              Center(
+                child: buildClosedWrap(context, from, to),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildHeader(BuildContext context) {
     final langeServices = Provider.of<LangServices>(context, listen: false);
 
     return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    S.of(context).choose_your_favorite_food,
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              S.of(context).choose_your_favorite_food,
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(width: langeServices.selectedLang == 'ar' ? 180 : 90),
-              Consumer<GetProfileProvider>(
-                builder: (context, profileProvider, child) {
-                  final points = profileProvider.userProfile?.points ?? 0;
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => const PointsItemsScreen(),
-                      ));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              points.toString(),
-                              style: const TextStyle(
-                                color: maincolor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          SvgPicture.asset(
-                            'assets/images/coin.svg',
-                            width: 10,
-                            height: 20,
-                          ),
-                        ],
+            ),
+          ],
+        ),
+        SizedBox(width: langeServices.selectedLang == 'ar' ? 180 : 90),
+        Consumer<GetProfileProvider>(
+          builder: (context, profileProvider, child) {
+            final points = profileProvider.userProfile?.points ?? 0;
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const PointsItemsScreen(),
+                ));
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        points.toString(),
+                        style: const TextStyle(
+                          color: maincolor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  );
-                },
+                    const SizedBox(width: 5),
+                    SvgPicture.asset(
+                      'assets/images/coin.svg',
+                      width: 10,
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
-            ],
-          );
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Widget _buildSearchAndFilter() {
-  final searchController = TextEditingController();
-  return Row(
-    children: [
-      Expanded(
-        child: Container(
-          height: 56,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: Center(
-            child: TextField(
-              controller: searchController,
-              onChanged: (value) {
-                Provider.of<ProductProvider>(context, listen: false)
-                    .updateSearchQuery(value);
-              },
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (ctx) => const SearchScreen()),
-                );
-              },
-              decoration: InputDecoration(
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.grey,
+    final searchController = TextEditingController();
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 56,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Center(
+              child: TextField(
+                controller: searchController,
+                onChanged: (value) {
+                  Provider.of<ProductProvider>(context, listen: false)
+                      .updateSearchQuery(value);
+                },
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => const SearchScreen()),
+                  );
+                },
+                decoration: InputDecoration(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  hintText: S.of(context).search,
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
                 ),
-                hintText: S.of(context).search,
-                hintStyle: const TextStyle(color: Colors.grey),
-                border: InputBorder.none,
               ),
             ),
           ),
         ),
-      ),
-      const SizedBox(width: 16),
-      CircleAvatar(
-        backgroundColor: maincolor,
-        child: IconButton(
-          icon: SvgPicture.asset('assets/images/filter.svg'),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const FilterScreen()));
-          },
+        const SizedBox(width: 16),
+        CircleAvatar(
+          backgroundColor: maincolor,
+          child: IconButton(
+            icon: SvgPicture.asset('assets/images/filter.svg'),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FilterScreen()));
+            },
+          ),
         ),
-      ),
-    ],
-  );
-}
-
+      ],
+    );
+  }
 
   Widget _buildImageCarousel() {
     return Consumer<BannerProvider>(builder: (context, bannerProvider, child) {
@@ -345,57 +343,51 @@ Widget build(BuildContext context) {
   Widget _buildCategoryList() {
     return Consumer<CategoriesProvider>(
       builder: (context, categoriesProvider, child) {
-        final allCategory = Category(
-          name: S.of(context).all,
-          imageLink: 'assets/images/Onboarding3.png',
-          id: 0,
-          status: 1,
-          activity: 1,
-          priority: 0,
-          subCategories: [],
-          addons: [],
-        );
-
-        final categories = [allCategory, ...categoriesProvider.categories];
+        final categories = categoriesProvider.categories;
 
         // Split categories into two groups
-        final firstRowCategories = categories.take(4).toList();
-        final secondRowCategories = categories.skip(4).toList();
+        final firstRowCategories = categories.take(3).toList();
+        final secondRowCategories = categories.skip(3).toList();
 
         return Column(
           children: [
-            // Non-scrollable row
+            // First row of categories
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 1),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment:
+                    MainAxisAlignment.center, // Align items from the start
                 children: firstRowCategories.map((category) {
-                  return _buildCategoryItem(
-                    category.name,
-                    category.imageLink,
-                    MediaQuery.of(context).size.width / 4.5, // Adjust width
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        right: 10), // Padding between categories
+                    child: _buildCategoryItem(
+                      category.name,
+                      category.imageLink,
+                      MediaQuery.of(context).size.width / 4, // Adjust width
+                    ),
                   );
                 }).toList(),
               ),
             ),
             const SizedBox(height: 15),
-            // Scrollable row
-            SizedBox(
-              height: 130,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: secondRowCategories.length,
-                itemBuilder: (context, index) {
-                  final category = secondRowCategories[index];
+            // Second row of categories
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 1),
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.center, // Align items from the start
+                children: secondRowCategories.map((category) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.only(
+                        right: 10), // Padding between categories
                     child: _buildCategoryItem(
                       category.name,
                       category.imageLink,
-                      MediaQuery.of(context).size.width / 4.5, // Adjust width
+                      MediaQuery.of(context).size.width / 4, // Adjust width
                     ),
                   );
-                },
+                }).toList(),
               ),
             ),
           ],
