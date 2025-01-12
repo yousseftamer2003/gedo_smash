@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "589436418856",
+    "project_id": "food2go-d9547",
+    "storage_bucket": "food2go-d9547.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589436418856:android:2786c830ad6324c4dbee1d",
+        "android_client_info": {
+          "package_name": "com.admin.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3D5ZoQ6YOkOHABmZnVdzhmKMgZT9YSiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589436418856:android:501749d750e05b48dbee1d",
+        "android_client_info": {
+          "package_name": "com.admin.food2go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3D5ZoQ6YOkOHABmZnVdzhmKMgZT9YSiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589436418856:android:c1d7a5f581418284dbee1d",
+        "android_client_info": {
+          "package_name": "com.app.gedosmash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3D5ZoQ6YOkOHABmZnVdzhmKMgZT9YSiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589436418856:android:d333168d85f0a51fdbee1d",
+        "android_client_info": {
+          "package_name": "com.example.test_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3D5ZoQ6YOkOHABmZnVdzhmKMgZT9YSiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
